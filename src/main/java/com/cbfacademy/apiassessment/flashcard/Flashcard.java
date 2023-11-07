@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.flashcard;
+package com.cbfacademy.apiassessment.Flashcard;
 
 import java.util.UUID;
 
@@ -9,6 +9,10 @@ public class Flashcard {
     String flashcardAnswer;
     String difficulty;
     String topic;
+
+    public enum difficulty {
+        EASY, NORMAL, HARD
+    }
 
 
     public Flashcard(String flashcardQuestion, String flashcardAnswer, String difficulty, String topic) {
@@ -57,5 +61,6 @@ public class Flashcard {
         this.topic = topic;
     }
 
-
+// difficultly enum
+//create separte file for enum
 }
