@@ -7,7 +7,7 @@ public class Flashcard {
     UUID id;
     String flashcardQuestion;
     String flashcardAnswer;
-    String difficulty;
+    difficulty difficultyType;
     String topic;
 
     public enum difficulty {
@@ -15,11 +15,11 @@ public class Flashcard {
     }
 
 
-    public Flashcard(String flashcardQuestion, String flashcardAnswer, String difficulty, String topic) {
+    public Flashcard(String flashcardQuestion, String flashcardAnswer, difficulty difficultyType, String topic) {
         this.id = UUID.randomUUID();
         this.flashcardQuestion = flashcardQuestion;
         this.flashcardAnswer = flashcardAnswer;
-        this.difficulty = difficulty;
+        this.difficultyType = difficultyType;
         this.topic = topic;
     }
 
@@ -37,7 +37,7 @@ public class Flashcard {
     }
 
     public String getDifficulty() {
-        return this.difficulty;
+        return this.difficultyType.name();
     }
 
     public String getTopic() {
@@ -53,14 +53,12 @@ public class Flashcard {
         this.flashcardAnswer = flashcardAnswer;
     }
     
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+    public void setDifficulty(difficulty difficultyType) {
+        this.difficultyType = difficultyType;
     }    
 
     public void setTopic(String topic) {
         this.topic = topic;
     }
 
-// difficultly enum
-//create separte file for enum
 }
