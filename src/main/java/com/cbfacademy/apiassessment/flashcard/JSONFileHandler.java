@@ -67,14 +67,19 @@ public class JSONFileHandler {
         writeJSONFile(flashcards, "Flashcards.json");
     }
 
-    public static void updateFlashcard(String filename, Flashcard updatedFlashcard) {
+    public static void updateFlashcard(String filename, Flashcard updatedFlashcard, String parameterToUpdate, String updatedValue) {
         List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
+
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {
             //Remove specified flashcard from list and add updated version
             if (flashcard.getID()==updatedFlashcard.getID()) {
-                flashcards.remove(flashcard);
-                flashcards.add(updatedFlashcard);
+                switch (parameterToUpdate) {
+                    case ("flashcardQuestion") -> flashcard.setFlashcardQuestion(updatedValue);
+                    case ("flashcardAnswer") -> flashcard.setFlashcardAnswer(updatedValue);
+                    case ("difficultyType") -> flashcard.setDifficulty(Flashcard.difficulty.valueOf(updatedValue));
+                    case ("topic") -> flashcard.setTopic(updatedValue);
+                }
             }
         }
         //Overwrite json with updated list
