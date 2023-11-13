@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,11 +21,11 @@ public class JSONFileHandler {
 
         try (FileWriter writer = new FileWriter(filename)){
             gson.toJson(flashcards, writer);
+            writer.flush();
         } catch (IOException e) {
 
         }
     }
-
 
     public static @NotNull
     @Unmodifiable List<Flashcard> readJSONFile(String filename) {
@@ -53,18 +54,31 @@ public class JSONFileHandler {
     }
 
     public static void removeFlashcard(UUID id, String filename) {
-        List<Flashcard> flashcards = getAllFlashcards(filename);
+        List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
         // Find flashcards in list
-        //Remove specified flashcard from list
-        //Overwrite json with updated list
+        for (Flashcard flashcard:flashcards) {
+            //Remove specified flashcard from list
+            if (flashcard.getID()==id) {
+                flashcards.remove(flashcard);
+            }
+        }
 
+        //Overwrite json with updated list
+        writeJSONFile(flashcards, "Flashcards.json");
     }
 
-    public static void updateFlashcard(UUID id, String filename) {
-        List<Flashcard> flashcards = getAllFlashcards(filename);
+    public static void updateFlashcard(String filename, Flashcard updatedFlashcard) {
+        List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
         // Find flashcards in list
-        //Change value of flashcard
+        for (Flashcard flashcard:flashcards) {
+            //Remove specified flashcard from list and add updated version
+            if (flashcard.getID()==updatedFlashcard.getID()) {
+                flashcards.remove(flashcard);
+                flashcards.add(updatedFlashcard);
+            }
+        }
         //Overwrite json with updated list
+        writeJSONFile(flashcards, "Flashcards.json");
 
     }
             
