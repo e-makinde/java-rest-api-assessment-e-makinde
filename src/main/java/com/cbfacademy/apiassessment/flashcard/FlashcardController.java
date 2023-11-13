@@ -1,16 +1,9 @@
 package com.cbfacademy.apiassessment.Flashcard;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //create json file put in separate folder
 
@@ -26,19 +19,30 @@ public class FlashcardController {
 
     //Return an individual question using the ID
     @GetMapping("/question{id}")
-    public Flashcard getQuestionByID(@PathVariable("id") String id) {
-        return new Flashcard("Where are you?", "London", "Easy", "Location");
+    public String getQuestionByID(@PathVariable("id") String id) {
+        List<Flashcard> flashcards = getAllFlashcardQandA();
+
+        for (Flashcard flashcard:flashcards) {
+            if (flashcard.getID().toString().equals(id)) {
+                return flashcard.getFlashcardQuestion();
+            }
+        }
+        return "No question found";
     
     }
 
     //Return an individual answer using the ID
     @GetMapping("/answer{id}")
     public String getAnswerByID(@PathVariable("id") String id) {
-        //search all flashcards and return the answer of the specific question
-        List<Flashcard> flashcards = new ArrayList<Flashcard>();
-        //ListIterator<Flashcard> flashcardListIterator = new ListIterator<Flashcard>();
+        List<Flashcard> flashcards = getAllFlashcardQandA();
 
-        
+        for (Flashcard flashcard:flashcards) {
+            if (flashcard.getID().toString().equals(id)) {
+                return flashcard.getFlashcardAnswer();
+            }
+        }
+        return "No Answer found";
+
     }
 
     //Get all questions with a certain difficulty
@@ -57,6 +61,13 @@ public class FlashcardController {
     public void createFlashcard(@RequestBody Flashcard flashcard) {
         JSONFileHandler.addFlashcard(flashcard, "Flashcards.json");
     }
+
+    @DeleteMapping
+    public void deleteFlashcard(@RequestBody Flashcard flashcard) {
+        UUID flashcardToDeleteID = flashcard.getID();
+        JSONFileHandler.removeFlashcard(flashcardToDeleteID, "Flashcards.json");
+    }
+
 
 
     
