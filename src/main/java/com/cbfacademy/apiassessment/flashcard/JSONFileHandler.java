@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,22 +47,17 @@ public class JSONFileHandler {
 
 
     public static void addFlashcard(Flashcard flashcard, String filename) {
-        List<Flashcard> flashcards = getAllFlashcards(filename);
+        List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
         flashcards.add(flashcard);
         writeJSONFile(flashcards,filename);
     }
 
     public static void removeFlashcard(UUID id, String filename) {
         List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
-        // Find flashcards in list
-        for (Flashcard flashcard:flashcards) {
-            //Remove specified flashcard from list
-            if (flashcard.getID()==id) {
-                flashcards.remove(flashcard);
-            }
-        }
+        // Find flashcard in list, using ID, and remove specified flashcard
+        flashcards.removeIf(flashcard -> flashcard.getID() == id);
 
-        //Overwrite json with updated list
+        //Overwrite json with updated flashcard list
         writeJSONFile(flashcards, "Flashcards.json");
     }
 
@@ -72,7 +66,7 @@ public class JSONFileHandler {
 
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {
-            //Remove specified flashcard from list and add updated version
+            //Find flashcard obj and update as per the parameter stated
             if (flashcard.getID()==updatedFlashcard.getID()) {
                 switch (parameterToUpdate) {
                     case ("flashcardQuestion") -> flashcard.setFlashcardQuestion(updatedValue);
@@ -82,7 +76,7 @@ public class JSONFileHandler {
                 }
             }
         }
-        //Overwrite json with updated list
+        //Overwrite json with updated flashcard list
         writeJSONFile(flashcards, "Flashcards.json");
 
     }
