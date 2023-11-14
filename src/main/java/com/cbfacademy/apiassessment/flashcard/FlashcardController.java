@@ -72,13 +72,13 @@ public class FlashcardController {
         return sameTopicFlashcards;
     }
 
-    @PostMapping(path="/", produces="application/json")
+    @PostMapping(path="/new", produces="application/json")
     public void createFlashcard(@RequestBody Flashcard flashcard) {
         JSONFileHandler.addFlashcard(flashcard, "Flashcards.json");
     }
 
-    @DeleteMapping
-    public void deleteFlashcard(@RequestBody Flashcard flashcard) {
+    @DeleteMapping(path="/delete/{id}")
+    public void deleteFlashcard(@PathVariable("id") @RequestBody Flashcard flashcard) {
         UUID flashcardToDeleteID = flashcard.getID();
         JSONFileHandler.removeFlashcard(flashcardToDeleteID, "Flashcards.json");
     }
