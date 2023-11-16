@@ -3,6 +3,8 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.cbfacademy.apiassessment.Flashcard.JSONFileHandler;
 import com.cbfacademy.apiassessment.model.Flashcard;
@@ -17,9 +19,11 @@ public class FlashcardController {
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
     public String getAllFlashcards(Model model) {
+
+        List flashcardList = IntStream.range(0,5).mapToObj(i -> JSONFileHandler.readJSONFile(String.valueOf(i))).toList();
         flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
-        model.addAttribute("flashcards",flashcards);
-        return "AllFlashcards";
+        model.addAttribute("flashcards",flashcardList);
+        return "flashcard";
     }
 
     //Return an individual question using the ID
