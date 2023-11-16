@@ -18,12 +18,9 @@ public class FlashcardController {
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public String getAllFlashcards(Model model) {
-
-        List flashcardList = IntStream.range(0,5).mapToObj(i -> JSONFileHandler.readJSONFile(String.valueOf(i))).toList();
+    public List<Flashcard> getAllFlashcards(Model model) {
         flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
-        model.addAttribute("flashcards",flashcardList);
-        return "flashcard";
+        return flashcards;
     }
 
     //Return an individual question using the ID
@@ -86,8 +83,7 @@ public class FlashcardController {
     }
 
     @PostMapping(path="/new", produces="application/json")
-    public void createFlashcard(Flashcard flashcard) {
-
+    public void createFlashcard(@RequestBody Flashcard flashcard) {
         JSONFileHandler.addFlashcard(flashcard, "src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
     }
 
