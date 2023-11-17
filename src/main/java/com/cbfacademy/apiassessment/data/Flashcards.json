@@ -1,0 +1,23 @@
+[
+  {
+    "flashcardID": "408a75c6-2381-4594-a99e-92022e274ce0",
+    "flashcardQuestion": "What does JSON stand for?",
+    "flashcardAnswer": "JavaScriptObjectNotation",
+    "flashcardDifficultyType": "EASY",
+    "flashcardTopic": "definitions"
+  },
+  {
+    "flashcardID": "0da157ce-8190-4e04-8423-d2651d8877be",
+    "flashcardQuestion": "What does HTML stand for?",
+    "flashcardAnswer": "HyperTExtMarkupLanguage",
+    "flashcardDifficultyType": "EASY",
+    "flashcardTopic": "definitions"
+  },
+  {
+    "flashcardID": "f4c8f256-3b55-48d5-9f1d-fef2c2f6ee0f",
+    "flashcardQuestion": "What does HTML stand for?",
+    "flashcardAnswer": "HyperTExtMarkupLanguage",
+    "flashcardDifficultyType": "EASY",
+    "flashcardTopic": "definitions"
+  }
+]

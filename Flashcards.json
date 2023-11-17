@@ -14,8 +14,10 @@
     "topic": "person"
   },
   {
+    "id": "42154773-9af0-4590-b06d-35bd00a0eba1",
     "flashcardQuestion": "What does JSON stand for?",
-    "flashcardAnswer": "JavaScript Object Notation",
-    "topic": "Definitions"
+    "flashcardAnswer": "JavaScriptObjectNotation",
+    "difficultyType": "EASY",
+    "topic": "definitions"
   }
 ]
