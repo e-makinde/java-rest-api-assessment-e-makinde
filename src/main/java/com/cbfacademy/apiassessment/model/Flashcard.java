@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.Flashcard;
+package com.cbfacademy.apiassessment.model;
 
 import java.util.UUID;
 
