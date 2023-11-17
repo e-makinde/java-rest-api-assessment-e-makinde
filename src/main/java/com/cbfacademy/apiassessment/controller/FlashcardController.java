@@ -91,11 +91,8 @@ public class FlashcardController {
 
 
     @DeleteMapping("/delete/{id}")
-    public void deleteFlashcardByID(@PathVariable("id") String id) {
-
-        UUID flashcardToDeleteID = UUID.fromString(id);
-        flashcardServiceImp.removeFlashcard(flashcardToDeleteID);
-
+    public void deleteFlashcardByID(@PathVariable("id") UUID id) {
+        flashcardServiceImp.removeFlashcard(id);
     }
 
 }
