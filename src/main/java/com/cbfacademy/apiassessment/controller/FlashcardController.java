@@ -4,31 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.cbfacademy.apiassessment.service.JSONFileHandler;
+import com.cbfacademy.apiassessment.repository.flashcardRepository;
+import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/flashcard")
 public class FlashcardController {
+
+
+
     String JSONPath = "src/main/java/com/cbfacademy/apiassessment/Flashcard/Flashcards.json";
-    List<Flashcard> flashcards = new ArrayList<>(JSONFileHandler.readJSONFile(JSONPath));
+    List<Flashcard> flashcards = new ArrayList<>(flashcardRepository.readJSONFile());
 
-
+    public enum flashcardAttribute {
+        flashcardQuestion, flashcardAnswer, difficultyType, topic
+    }
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public List<Flashcard> getAllFlashcards(Model model) {
+    public List<Flashcard> getAllFlashcards() {
         return flashcards;
     }
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
-    public String getQuestionByID(@PathVariable("id") String id, Model model) {
+    public String getQuestionByID(@PathVariable("id") String id) {
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
-                model.addAttribute("question", flashcard.getFlashcardQuestion());
                 return flashcard.getFlashcardQuestion();
             }
         }
@@ -38,10 +43,9 @@ public class FlashcardController {
 
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
-    public String getAnswerByID(@PathVariable("id") String id, Model model) {
+    public String getAnswerByID(@PathVariable("id") String id) {
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
-                model.addAttribute(flashcard.getFlashcardAnswer());
                 return flashcard.getFlashcardAnswer();
             }
         }
@@ -77,19 +81,21 @@ public class FlashcardController {
 
     @PostMapping(path="/new", produces="application/json")
     public void createFlashcard(@RequestBody Flashcard flashcard) {
-        JSONFileHandler.addFlashcard(flashcard, JSONPath);
+        flashcardServiceImp.addFlashcard(flashcard);
     }
 
-    @PutMapping(path = "/update/{id}", produces = "application/json")
-    public void updateFlashcard(@PathVariable("id") @RequestBody Flashcard flashcard) {
-        JSONFileHandler.findFlashcardByID(flashcard.getID().toString(), JSONPath);
+    @PutMapping(path = "/update", produces = "application/json")
+    public void updateFlashcard(@RequestBody Flashcard flashcard) {
+        flashcardServiceImp.updateFlashcard(flashcard);
     }
 
 
     @DeleteMapping("/delete/{id}")
     public void deleteFlashcardByID(@PathVariable("id") String id) {
+
         UUID flashcardToDeleteID = UUID.fromString(id);
-        JSONFileHandler.removeFlashcard(flashcardToDeleteID, JSONPath);
+        flashcardServiceImp.removeFlashcard(flashcardToDeleteID);
+
     }
 
 }

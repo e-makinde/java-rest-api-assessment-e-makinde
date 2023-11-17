@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public class Flashcard {
 
-    UUID id;
-    String flashcardQuestion;
-    String flashcardAnswer;
-    difficulty difficultyType;
-    String topic;
+    private UUID id;
+    private String flashcardQuestion;
+    private String flashcardAnswer;
+    private difficulty difficultyType;
+    private String topic;
 
     public enum difficulty {
         EASY, NORMAL, HARD
@@ -36,8 +36,8 @@ public class Flashcard {
         return this.flashcardAnswer;
     }
 
-    public String getDifficulty() {
-        return this.difficultyType.name();
+    public difficulty getDifficulty() {
+        return this.difficultyType;
     }
 
     public String getTopic() {
