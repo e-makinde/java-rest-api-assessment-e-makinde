@@ -1,13 +1,13 @@
 package com.cbfacademy.apiassessment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.UUID;
+
 
 public class Flashcard {
 
     @JsonProperty("id")
-    private final UUID flashcardID;
+    private UUID flashcardID;
     @JsonProperty("question")
     private String flashcardQuestion;
     @JsonProperty("answer")
@@ -16,6 +16,7 @@ public class Flashcard {
     private difficulty flashcardDifficultyType;
     @JsonProperty("topic")
     private String flashcardTopic;
+
 
     public enum difficulty {
         EASY, NORMAL, HARD

@@ -1,36 +1,34 @@
 package com.cbfacademy.apiassessment.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import com.cbfacademy.apiassessment.repository.flashcardRepository;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+@SpringBootApplication
 @RestController
 @RequestMapping("/flashcard")
 public class FlashcardController {
 
+    @Autowired
+    private flashcardServiceImp flashcardServiceImp;
 
-
-    String JSONPath = "src/main/java/com/cbfacademy/apiassessment/Flashcard/Flashcards.json";
-    List<Flashcard> flashcards = new ArrayList<>(flashcardRepository.readJSONFile());
-
-    public enum flashcardAttribute {
-        flashcardQuestion, flashcardAnswer, difficultyType, topic
-    }
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public List<Flashcard> getAllFlashcards() {
+    public ArrayList<Flashcard> getAllFlashcards() {
+        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         return flashcards;
     }
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
     public String getQuestionByID(@PathVariable("id") String id) {
+        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
                 return flashcard.getFlashcardQuestion();
@@ -43,6 +41,7 @@ public class FlashcardController {
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
     public String getAnswerByID(@PathVariable("id") String id) {
+        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
                 return flashcard.getFlashcardAnswer();
@@ -54,11 +53,12 @@ public class FlashcardController {
 
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
-    public List<Flashcard> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
-        List<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
+    public ArrayList<Flashcard> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
+        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
+        ArrayList<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
 
         for (Flashcard flashcard:flashcards) {
-            if (flashcard.getDifficulty().equals(difficulty)) {
+            if (flashcard.getDifficulty().toString().equals(difficulty)) {
                 sameDifficultyFlashcards.add(flashcard);
             }
         }
@@ -67,8 +67,9 @@ public class FlashcardController {
 
     //Get all questions within a certain topic
     @GetMapping("/questions/topic/{topic}")
-    public List<Flashcard> getQuestionsByTopic(@PathVariable("topic") String topic) {
-        List<Flashcard> sameTopicFlashcards = new ArrayList<>();
+    public ArrayList<Flashcard> getQuestionsByTopic(@PathVariable("topic") String topic) {
+        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
+        ArrayList<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getFlashcardTopic().equals(topic)) {

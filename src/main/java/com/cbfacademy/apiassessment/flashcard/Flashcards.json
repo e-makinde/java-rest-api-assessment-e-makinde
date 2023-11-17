@@ -1,16 +1,16 @@
 [
   {
-    "id": "19fcbae0-3703-47ef-9966-f41a20a0e7af",
-    "flashcardQuestion": "Who are you?",
-    "flashcardAnswer": "Esther",
-    "difficultyType": "EASY",
-    "topic": "person"
-  },
-  {
-    "id": "42154773-9af0-4590-b06d-35bd00a0eba1",
+    "flashcardID": "408a75c6-2381-4594-a99e-92022e274ce0",
     "flashcardQuestion": "What does JSON stand for?",
     "flashcardAnswer": "JavaScriptObjectNotation",
-    "difficultyType": "EASY",
-    "topic": "definitions"
+    "flashcardDifficultyType": "EASY",
+    "flashcardTopic": "definitions"
+  },
+  {
+    "flashcardID": "0da157ce-8190-4e04-8423-d2651d8877be",
+    "flashcardQuestion": "What does HTML stand for?",
+    "flashcardAnswer": "HyperTExtMarkupLanguage",
+    "flashcardDifficultyType": "EASY",
+    "flashcardTopic": "definitions"
   }
 ]
