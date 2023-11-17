@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/flashcard")
 public class FlashcardController {
     List<Flashcard> flashcards = new ArrayList<>();
+    String JSONpath = "src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json";
+
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
     public List<Flashcard> getAllFlashcards(Model model) {
-        flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        flashcards = JSONFileHandler.readJSONFile(JSONpath);
         return flashcards;
     }
 
@@ -27,7 +29,7 @@ public class FlashcardController {
     @GetMapping("/question/{id}")
     public String getQuestionByID(@PathVariable("id") String id, Model model) {
 
-        flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        flashcards = JSONFileHandler.readJSONFile(JSONpath);
 
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
@@ -42,7 +44,7 @@ public class FlashcardController {
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
     public String getAnswerByID(@PathVariable("id") String id, Model model) {
-        flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        flashcards = JSONFileHandler.readJSONFile(JSONpath);
 
         for (Flashcard flashcard:flashcards) {
             if (flashcard.getID().toString().equals(id)) {
@@ -57,7 +59,7 @@ public class FlashcardController {
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
     public List<Flashcard> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
-        flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        flashcards = JSONFileHandler.readJSONFile(JSONpath);
         List<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
 
         for (Flashcard flashcard:flashcards) {
@@ -71,7 +73,7 @@ public class FlashcardController {
     //Get all questions within a certain topic
     @GetMapping("/questions/topic/{topic}")
     public List<Flashcard> getQuestionsByTopic(@PathVariable("topic") String topic) {
-        flashcards = JSONFileHandler.readJSONFile("src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        flashcards = JSONFileHandler.readJSONFile(JSONpath);
         List<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
         for (Flashcard flashcard:flashcards) {
@@ -84,16 +86,19 @@ public class FlashcardController {
 
     @PostMapping(path="/new", produces="application/json")
     public void createFlashcard(@RequestBody Flashcard flashcard) {
-        JSONFileHandler.addFlashcard(flashcard, "src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+        JSONFileHandler.addFlashcard(flashcard, JSONpath);
     }
+
+    @PutMapping(path = "/update/{id}", produces = "application/json")
+    public void updateFlashcard(@PathVariable("id") @RequestBody Flashcard flashcard) {
+        JSONFileHandler.findFlashcardByID(flashcard.getID().toString(), JSONpath);
+    }
+
 
     @DeleteMapping("/delete/{id}")
-    public void deleteFlashcard(@PathVariable("id") @ModelAttribute Flashcard flashcard) {
-        UUID flashcardToDeleteID = flashcard.getID();
-        JSONFileHandler.removeFlashcard(flashcardToDeleteID, "src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json");
+    public void deleteFlashcardByID(@PathVariable("id") String id) {
+        UUID flashcardToDeleteID = UUID.fromString(id);
+        JSONFileHandler.removeFlashcard(flashcardToDeleteID, JSONpath);
     }
 
-
-
-    
 }
