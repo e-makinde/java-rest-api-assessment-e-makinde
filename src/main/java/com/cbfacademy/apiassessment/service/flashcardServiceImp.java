@@ -36,7 +36,7 @@ public class flashcardServiceImp implements flashcardService {
         flashcardRepository.writeJSONFile(flashcards);
     }
 
-
+    @Override
     public void updateFlashcard(Flashcard updatedFlashcard) {
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         // Find flashcards in list
@@ -51,21 +51,6 @@ public class flashcardServiceImp implements flashcardService {
         }
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
-    }
-
-    // add exception handling flashcard not found
-    public Flashcard getFlashcardByID(String id) {
-        ArrayList<Flashcard> flashcards = getAllFlashcards();
-        Flashcard foundFlashcard = null;
-
-        // Find flashcards in list
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().equals(UUID.fromString(id))) {
-                foundFlashcard = flashcard;
-                return foundFlashcard;
-            }
-        }
-        return foundFlashcard;
     }
             
 }
