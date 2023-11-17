@@ -13,13 +13,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class flashcardRepository {
     String filename = "src/main/java/com/cbfacademy/apiassessment/Flashcard/Flashcards.json";
 
-    public void writeJSONFile(List<Flashcard> flashcards) {
+    public void writeJSONFile(ArrayList<Flashcard> flashcards) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter writer = new FileWriter(filename)){

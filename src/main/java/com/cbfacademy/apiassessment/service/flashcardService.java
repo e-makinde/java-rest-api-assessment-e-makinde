@@ -10,10 +10,10 @@ public interface flashcardService {
         return null;
     }
 
-    default void addFlashcard(Flashcard flashcard){
-    }
+    default void addFlashcard(Flashcard flashcard){}
 
-    default void removeFlashcard(UUID id) {
-    }
+    default void removeFlashcard(UUID id) {}
+
+    default void updateFlashcard(Flashcard updatedFlashcard) {}
 
 }
