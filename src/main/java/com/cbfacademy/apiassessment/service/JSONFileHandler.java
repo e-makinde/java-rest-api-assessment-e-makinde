@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.Flashcard;
+package com.cbfacademy.apiassessment.service;
 
 import java.io.FileReader;
 import java.io.FileWriter;

@@ -3,10 +3,8 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import com.cbfacademy.apiassessment.Flashcard.JSONFileHandler;
+import com.cbfacademy.apiassessment.service.JSONFileHandler;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/flashcard")
 public class FlashcardController {
     List<Flashcard> flashcards = new ArrayList<>();
-    String JSONpath = "src/main/java/com/cbfacademy/apiassessment/Flashcard/userFlashcards/Flashcards.json";
+    String JSONpath = "src/main/java/com/cbfacademy/apiassessment/Flashcard/Flashcards.json";
 
 
     //Return all questions and answers that have been saved
