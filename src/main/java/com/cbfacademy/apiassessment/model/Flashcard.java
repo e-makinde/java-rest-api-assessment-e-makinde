@@ -1,9 +1,11 @@
 package com.cbfacademy.apiassessment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.util.UUID;
 
-
+@JsonPropertyOrder({ "id", "question", "answer", "difficulty", "topic" })
 public class Flashcard {
 
     @JsonProperty("id")

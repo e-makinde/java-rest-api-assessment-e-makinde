@@ -6,10 +6,8 @@ import java.util.UUID;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/flashcard")
 public class FlashcardController {
@@ -21,8 +19,18 @@ public class FlashcardController {
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
     public ArrayList<Flashcard> getAllFlashcards() {
+        return flashcardServiceImp.getAllFlashcards();
+    }
+
+    @GetMapping("/{id}")
+    public Flashcard getFlashcardByID(@PathVariable("id") String id) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        return flashcards;
+        for (Flashcard flashcard:flashcards) {
+            if (flashcard.getID().toString().equals(id)) {
+                return flashcard;
+            }
+        }
+        return null;
     }
 
     //Return an individual question using the ID
@@ -79,10 +87,12 @@ public class FlashcardController {
         return sameTopicFlashcards;
     }
 
+
     @PostMapping(path="/new", produces="application/json")
     public void createFlashcard(@RequestBody Flashcard flashcard) {
         flashcardServiceImp.addFlashcard(flashcard);
     }
+
 
     @PutMapping(path = "/update", produces = "application/json")
     public void updateFlashcard(@RequestBody Flashcard flashcard) {
@@ -90,8 +100,8 @@ public class FlashcardController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteFlashcardByID(@PathVariable("id") UUID id) {
+    @DeleteMapping("/delete")
+    public void deleteFlashcardByID(UUID id) {
         flashcardServiceImp.removeFlashcard(id);
     }
 
