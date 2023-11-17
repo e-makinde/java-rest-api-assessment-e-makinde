@@ -58,7 +58,7 @@ public class flashcardServiceImp implements flashcardService {
                 flashcard.setFlashcardQuestion(updatedFlashcard.getFlashcardQuestion());
                 flashcard.setFlashcardAnswer(updatedFlashcard.getFlashcardAnswer());
                 flashcard.setDifficulty(updatedFlashcard.getDifficulty());
-                flashcard.setTopic(updatedFlashcard.getTopic());
+                flashcard.setFlashcardTopic(updatedFlashcard.getFlashcardTopic());
             }
         }
         //Overwrite json with updated flashcard list

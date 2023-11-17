@@ -7,7 +7,6 @@ import java.util.UUID;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -72,7 +71,7 @@ public class FlashcardController {
         List<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
         for (Flashcard flashcard:flashcards) {
-            if (flashcard.getTopic().equals(topic)) {
+            if (flashcard.getFlashcardTopic().equals(topic)) {
                 sameTopicFlashcards.add(flashcard);
             }
         }

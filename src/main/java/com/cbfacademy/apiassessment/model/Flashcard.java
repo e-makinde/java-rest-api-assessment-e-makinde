@@ -1,31 +1,38 @@
 package com.cbfacademy.apiassessment.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class Flashcard {
 
-    private UUID id;
+    @JsonProperty("id")
+    private final UUID flashcardID;
+    @JsonProperty("question")
     private String flashcardQuestion;
+    @JsonProperty("answer")
     private String flashcardAnswer;
-    private difficulty difficultyType;
-    private String topic;
+    @JsonProperty("difficulty")
+    private difficulty flashcardDifficultyType;
+    @JsonProperty("topic")
+    private String flashcardTopic;
 
     public enum difficulty {
         EASY, NORMAL, HARD
     }
 
 
-    public Flashcard(String flashcardQuestion, String flashcardAnswer, difficulty difficultyType, String topic) {
-        this.id = UUID.randomUUID();
+    public Flashcard(String flashcardQuestion, String flashcardAnswer, difficulty flashcardDifficultyType, String flashcardTopic) {
+        this.flashcardID = UUID.randomUUID();
         this.flashcardQuestion = flashcardQuestion;
         this.flashcardAnswer = flashcardAnswer;
-        this.difficultyType = difficultyType;
-        this.topic = topic;
+        this.flashcardDifficultyType = flashcardDifficultyType;
+        this.flashcardTopic = flashcardTopic;
     }
 
     //GETTERS
     public UUID getID() {
-        return this.id;
+        return this.flashcardID;
     }
 
     public String getFlashcardQuestion() {
@@ -37,11 +44,11 @@ public class Flashcard {
     }
 
     public difficulty getDifficulty() {
-        return this.difficultyType;
+        return this.flashcardDifficultyType;
     }
 
-    public String getTopic() {
-        return this.topic;
+    public String getFlashcardTopic() {
+        return this.flashcardTopic;
     }
 
     //SETTERS
@@ -54,11 +61,11 @@ public class Flashcard {
     }
     
     public void setDifficulty(difficulty difficultyType) {
-        this.difficultyType = difficultyType;
+        this.flashcardDifficultyType = difficultyType;
     }    
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setFlashcardTopic(String flashcardTopic) {
+        this.flashcardTopic = flashcardTopic;
     }
 
 }
