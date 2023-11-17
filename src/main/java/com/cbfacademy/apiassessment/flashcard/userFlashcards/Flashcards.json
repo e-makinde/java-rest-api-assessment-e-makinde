@@ -1,0 +1,21 @@
+[
+  {
+    "id": "19fcbae0-3703-47ef-9966-f41a20a0e6af",
+    "flashcardQuestion": "Where are you?",
+    "flashcardAnswer": "London",
+    "difficultyType": "EASY",
+    "topic": "location"
+  },
+  {
+    "id": "19fcbae0-3703-47ef-9966-f41a20a0e7af",
+    "flashcardQuestion": "Who are you?",
+    "flashcardAnswer": "Esther",
+    "difficultyType": "EASY",
+    "topic": "person"
+  },
+  {
+    "flashcardQuestion": "What does JSON stand for?",
+    "flashcardAnswer": "JavaScript Object Notation",
+    "topic": "Definitions"
+  }
+]

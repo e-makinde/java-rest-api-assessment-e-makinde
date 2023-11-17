@@ -8,13 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.cbfacademy.apiassessment.model.Flashcard;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
+
 public class JSONFileHandler {
+
     public static void writeJSONFile(List<Flashcard> flashcards, String filename) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -43,6 +46,22 @@ public class JSONFileHandler {
 
     public static List<Flashcard> getAllFlashcards(String filename) {
         return readJSONFile(filename);
+    }
+
+    // add exception handling flashcard not found
+    public static Flashcard findFlashcardByID(String id, String filename) {
+        List<Flashcard> flashcards = new ArrayList<>(getAllFlashcards(filename));
+        Flashcard foundFlashcard = null;
+
+        // Find flashcards in list
+        for (Flashcard flashcard:flashcards) {
+            if (flashcard.getID().equals(UUID.fromString(id))) {
+                foundFlashcard = flashcard;
+                return foundFlashcard;
+            }
+
+        }
+        return foundFlashcard;
     }
 
 
