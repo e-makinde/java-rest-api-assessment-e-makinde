@@ -1,12 +1,13 @@
 package com.cbfacademy.apiassessment.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,35 +26,16 @@ public class FlashcardController {
 
     @GetMapping("/{id}")
     public Flashcard getFlashcardByID(@PathVariable("id") UUID id) {
-        throw new FlashcardNotFoundException("Flashcard not found");
-        //return flashcardServiceImp.getFlashcard(id);
+        return flashcardServiceImp.getFlashcard(id);
     }
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
-    public String getQuestionByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard.getFlashcardQuestion();
-            }
-        }
-        return "No question found";
-    
-    }
+    public String getQuestionByID(@PathVariable("id") UUID id) { return flashcardServiceImp.getQuestion(id);}
 
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
-    public String getAnswerByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard.getFlashcardAnswer();
-            }
-        }
-        return "No Answer found";
-
-    }
+    public String getAnswerByID(@PathVariable("id") UUID id) {return flashcardServiceImp.getAnswer(id);}
 
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
@@ -85,19 +67,19 @@ public class FlashcardController {
 
 
     @PostMapping(path="/new", produces="application/json")
-    public void createFlashcard(@RequestBody Flashcard flashcard) {
+    public void createFlashcard(@RequestBody Flashcard flashcard) throws IOException {
         flashcardServiceImp.addFlashcard(flashcard);
     }
 
 
     @PutMapping(path = "/update", produces = "application/json")
-    public void updateFlashcard(@RequestBody Flashcard flashcard) {
+    public void updateFlashcard(@RequestBody Flashcard flashcard) throws IOException {
         flashcardServiceImp.updateFlashcard(flashcard);
     }
 
 
     @DeleteMapping("/delete")
-    public void deleteFlashcardByID(UUID id) {
+    public void deleteFlashcardByID(UUID id) throws IOException {
         flashcardServiceImp.removeFlashcard(id);
     }
 

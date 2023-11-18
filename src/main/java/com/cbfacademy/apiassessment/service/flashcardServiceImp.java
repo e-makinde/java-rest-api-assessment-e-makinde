@@ -3,10 +3,13 @@ package com.cbfacademy.apiassessment.service;
 import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,20 +21,30 @@ public class flashcardServiceImp implements flashcardService {
     flashcardRepository flashcardRepository;
 
     @Override
-    public ArrayList<Flashcard> getAllFlashcards() {
+    public ArrayList<Flashcard> getAllFlashcards(){
         return flashcardRepository.readJSONFile();
     }
 
     public Flashcard getFlashcard(UUID id){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
-        Flashcard foundFlashcard = null;
+        Flashcard foundFlashcard = new Flashcard();
             for (Flashcard flashcard : flashcards) {
                 if (flashcard.getID().equals(id)) {
                     foundFlashcard = flashcard;
                     return  foundFlashcard;
+                } else {
+                    throw new FlashcardNotFoundException("Flashcard not found.");
                 }
             }
         return foundFlashcard;
+    }
+
+    public String getQuestion(UUID id) {
+        return getFlashcard(id).getFlashcardQuestion();
+    }
+
+    public String getAnswer(UUID id) {
+        return getFlashcard(id).getFlashcardAnswer();
     }
 
     @Override
@@ -49,10 +62,11 @@ public class flashcardServiceImp implements flashcardService {
 
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
+
     }
 
     @Override
-    public void updateFlashcard(Flashcard updatedFlashcard) {
+    public void updateFlashcard(Flashcard updatedFlashcard) throws FileNotFoundException {
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {

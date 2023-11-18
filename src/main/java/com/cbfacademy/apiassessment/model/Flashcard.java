@@ -2,6 +2,7 @@ package com.cbfacademy.apiassessment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -12,12 +13,16 @@ public class Flashcard {
     private UUID flashcardID;
     @JsonProperty("question")
     private String flashcardQuestion;
-    @JsonProperty("answer")
+    @JsonProperty("answer") @NotNull
     private String flashcardAnswer;
-    @JsonProperty("difficulty")
+    @JsonProperty("difficulty") @NotNull
     private difficulty flashcardDifficultyType;
-    @JsonProperty("topic")
+    @JsonProperty("topic") @NotNull
     private String flashcardTopic;
+
+    public Flashcard() {
+
+    }
 
 
     public enum difficulty {

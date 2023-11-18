@@ -8,10 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import org.springframework.stereotype.Repository;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 
 @Repository
@@ -21,25 +18,28 @@ public class flashcardRepository {
     public void writeJSONFile(ArrayList<Flashcard> flashcards) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter writer = new FileWriter(filename)){
+        try (FileWriter writer = new FileWriter(filename)) {
             gson.toJson(flashcards, writer);
             writer.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-
-
+            e.printStackTrace();
         }
     }
 
     public @NotNull
-    @Unmodifiable ArrayList<Flashcard> readJSONFile() {
+    @Unmodifiable ArrayList<Flashcard> readJSONFile(){
         ArrayList<Flashcard> flashcards = new ArrayList<>();
         Gson gson = new GsonBuilder().create();
 
         try(Reader reader = new FileReader(filename)) {
             flashcards = gson.fromJson(reader, new TypeToken<ArrayList<Flashcard>>() {
             }.getType());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return flashcards;
     }
