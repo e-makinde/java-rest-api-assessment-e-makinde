@@ -68,7 +68,6 @@ public class flashcardServiceImp implements flashcardService {
 
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {
-
             //Find flashcard obj and update as per the parameter stated
             if (flashcard.getID().equals(clientUpdatedFlashcard.getID())) {
                 flashcard.setFlashcardQuestion(clientUpdatedFlashcard.getFlashcardQuestion());

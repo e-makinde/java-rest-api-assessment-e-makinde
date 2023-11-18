@@ -33,15 +33,15 @@ public class FlashcardController {
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
-    public String getQuestionByID(@PathVariable("id") UUID id) { return flashcardServiceImp.getQuestion(id);}
+    public ResponseEntity<String> getQuestionByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getQuestion(id));}
 
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
-    public String getAnswerByID(@PathVariable("id") UUID id) {return flashcardServiceImp.getAnswer(id);}
+    public ResponseEntity<String> getAnswerByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getAnswer(id));}
 
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
-    public ArrayList<Flashcard> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
+    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
 
@@ -50,12 +50,12 @@ public class FlashcardController {
                 sameDifficultyFlashcards.add(flashcard);
             }
         }
-        return sameDifficultyFlashcards;
+        return ResponseEntity.ok(sameDifficultyFlashcards);
     }
 
     //Get all questions within a certain topic
     @GetMapping("/questions/topic/{topic}")
-    public ArrayList<Flashcard> getQuestionsByTopic(@PathVariable("topic") String topic) {
+    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByTopic(@PathVariable("topic") String topic) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class FlashcardController {
                 sameTopicFlashcards.add(flashcard);
             }
         }
-        return sameTopicFlashcards;
+        return ResponseEntity.ok(sameTopicFlashcards);
     }
 
 
