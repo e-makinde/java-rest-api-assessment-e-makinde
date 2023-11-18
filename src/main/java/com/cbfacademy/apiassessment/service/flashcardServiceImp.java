@@ -3,15 +3,10 @@ package com.cbfacademy.apiassessment.service;
 import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -66,18 +61,26 @@ public class flashcardServiceImp implements flashcardService {
     }
 
     @Override
-    public void updateFlashcard(Flashcard updatedFlashcard){
+    public void updateFlashcard(Flashcard clientUpdatedFlashcard){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
+
+        boolean flashcardFound = false;
+
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {
+
             //Find flashcard obj and update as per the parameter stated
-            if (flashcard.getID().equals(updatedFlashcard.getID())) {
-                flashcard.setFlashcardQuestion(updatedFlashcard.getFlashcardQuestion());
-                flashcard.setFlashcardAnswer(updatedFlashcard.getFlashcardAnswer());
-                flashcard.setDifficulty(updatedFlashcard.getDifficulty());
-                flashcard.setFlashcardTopic(updatedFlashcard.getFlashcardTopic());
+            if (flashcard.getID().equals(clientUpdatedFlashcard.getID())) {
+                flashcard.setFlashcardQuestion(clientUpdatedFlashcard.getFlashcardQuestion());
+                flashcard.setFlashcardAnswer(clientUpdatedFlashcard.getFlashcardAnswer());
+                flashcard.setDifficulty(clientUpdatedFlashcard.getDifficulty());
+                flashcard.setFlashcardTopic(clientUpdatedFlashcard.getFlashcardTopic());
+                flashcardFound = true;
             }
         }
+
+        if (!flashcardFound) throw new FlashcardNotFoundException("Not matching flashcard with the id.");
+
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
     }
