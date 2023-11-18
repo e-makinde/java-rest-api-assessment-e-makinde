@@ -1,11 +1,14 @@
 package com.cbfacademy.apiassessment.service;
 
+import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,6 +20,18 @@ public class flashcardServiceImp implements flashcardService {
     @Override
     public ArrayList<Flashcard> getAllFlashcards() {
         return flashcardRepository.readJSONFile();
+    }
+
+    public Flashcard getFlashcard(UUID id){
+        ArrayList<Flashcard> flashcards = getAllFlashcards();
+        Flashcard foundFlashcard = null;
+            for (Flashcard flashcard : flashcards) {
+                if (flashcard.getID().equals(id)) {
+                    foundFlashcard = flashcard;
+                    return  foundFlashcard;
+                }
+            }
+        return foundFlashcard;
     }
 
     @Override

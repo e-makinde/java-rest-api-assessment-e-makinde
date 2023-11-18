@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @Repository
 public class flashcardRepository {
-    String filename = "src/main/java/com/cbfacademy/apiassessment/Flashcard/Flashcards.json";
+    String filename = "src/main/java/com/cbfacademy/apiassessment/data/Flashcards.json";
 
     public void writeJSONFile(ArrayList<Flashcard> flashcards) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

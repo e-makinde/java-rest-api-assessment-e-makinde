@@ -3,6 +3,7 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,9 @@ public class FlashcardController {
     }
 
     @GetMapping("/{id}")
-    public Flashcard getFlashcardByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard;
-            }
-        }
-        return null;
+    public Flashcard getFlashcardByID(@PathVariable("id") UUID id) {
+        throw new FlashcardNotFoundException("Flashcard not found");
+        //return flashcardServiceImp.getFlashcard(id);
     }
 
     //Return an individual question using the ID
