@@ -27,7 +27,7 @@ public class flashcardServiceImp implements flashcardService {
 
     public Flashcard getFlashcard(UUID id){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
-        Flashcard foundFlashcard = new Flashcard();
+        Flashcard foundFlashcard = null;
             for (Flashcard flashcard : flashcards) {
                 if (flashcard.getID().equals(id)) {
                     foundFlashcard = flashcard;
@@ -66,7 +66,7 @@ public class flashcardServiceImp implements flashcardService {
     }
 
     @Override
-    public void updateFlashcard(Flashcard updatedFlashcard) throws FileNotFoundException {
+    public void updateFlashcard(Flashcard updatedFlashcard){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {

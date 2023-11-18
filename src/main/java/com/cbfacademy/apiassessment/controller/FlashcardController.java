@@ -7,8 +7,12 @@ import java.util.UUID;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/flashcard")
@@ -20,13 +24,13 @@ public class FlashcardController {
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public ArrayList<Flashcard> getAllFlashcards() {
-        return flashcardServiceImp.getAllFlashcards();
+    public ResponseEntity<ArrayList<Flashcard>> getAllFlashcards() {
+        return ResponseEntity.ok(flashcardServiceImp.getAllFlashcards());
     }
 
     @GetMapping("/{id}")
-    public Flashcard getFlashcardByID(@PathVariable("id") UUID id) {
-        return flashcardServiceImp.getFlashcard(id);
+    public ResponseEntity<Flashcard> getFlashcardByID(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(flashcardServiceImp.getFlashcard(id));
     }
 
     //Return an individual question using the ID
@@ -67,13 +71,13 @@ public class FlashcardController {
 
 
     @PostMapping(path="/new", produces="application/json")
-    public void createFlashcard(@RequestBody Flashcard flashcard) throws IOException {
+    public void createFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.addFlashcard(flashcard);
     }
 
 
     @PutMapping(path = "/update", produces = "application/json")
-    public void updateFlashcard(@RequestBody Flashcard flashcard) throws IOException {
+    public void updateFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.updateFlashcard(flashcard);
     }
 

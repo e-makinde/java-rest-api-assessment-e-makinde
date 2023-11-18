@@ -2,7 +2,9 @@ package com.cbfacademy.apiassessment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.hibernate.validator.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
+
 
 import java.util.UUID;
 
@@ -11,18 +13,18 @@ public class Flashcard {
 
     @JsonProperty("id")
     private UUID flashcardID;
-    @JsonProperty("question")
+
+    @JsonProperty("question") @NotBlank(message = "Question cannot be blank.")
     private String flashcardQuestion;
-    @JsonProperty("answer") @NotNull
+
+    @JsonProperty("answer") @NotBlank(message = "Answer cannot be blank")
     private String flashcardAnswer;
-    @JsonProperty("difficulty") @NotNull
+
+    @JsonProperty("difficulty")
     private difficulty flashcardDifficultyType;
-    @JsonProperty("topic") @NotNull
+
+    @JsonProperty("topic") @NotBlank (message = "Topic cannot be blank")
     private String flashcardTopic;
-
-    public Flashcard() {
-
-    }
 
 
     public enum difficulty {
