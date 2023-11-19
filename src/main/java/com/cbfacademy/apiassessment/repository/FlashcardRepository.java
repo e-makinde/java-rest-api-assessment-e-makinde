@@ -4,15 +4,13 @@ import com.cbfacademy.apiassessment.model.Flashcard;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Unmodifiable;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.util.ArrayList;
 
 @Repository
-public class flashcardRepository {
+public class FlashcardRepository {
     String filename = "src/main/java/com/cbfacademy/apiassessment/data/Flashcards.json";
 
     public void writeJSONFile(ArrayList<Flashcard> flashcards) {

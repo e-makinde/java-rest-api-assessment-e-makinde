@@ -3,7 +3,7 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.UUID;
 
 import com.cbfacademy.apiassessment.response.ResponseHandler;
-import com.cbfacademy.apiassessment.service.flashcardServiceImp;
+import com.cbfacademy.apiassessment.service.FlashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +34,7 @@ public class FlashcardController {
 
 
     @Autowired
-    private flashcardServiceImp flashcardServiceImp;
+    private FlashcardServiceImp flashcardServiceImp;
 
 
 
