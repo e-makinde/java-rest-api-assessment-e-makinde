@@ -22,8 +22,8 @@ import javax.validation.Valid;
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact (name = "Esther", email = "esthermakinde@hotmail.com"),
-                title = "Flashcard API Assessment",
-                description = "This is a Flashcard revision service that allows users to store their desired flashcards and generate quizzes."
+                title = "Flashcard Revision API Assessment",
+                description = "This is a Flashcard revision service that allows users to store their desired flashcards and generate lists of flashcards by topic & difficulty."
         ),
         servers = @Server(
                 description = "local environment",
