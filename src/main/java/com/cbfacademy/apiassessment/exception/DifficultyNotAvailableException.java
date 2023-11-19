@@ -3,9 +3,9 @@ package com.cbfacademy.apiassessment.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class FlashcardNotFoundException extends RuntimeException {
-    public FlashcardNotFoundException(String message) {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class DifficultyNotAvailableException extends RuntimeException {
+    public DifficultyNotAvailableException(String message) {
         super(message);
     }
 

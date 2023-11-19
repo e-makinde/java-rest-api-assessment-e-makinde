@@ -17,7 +17,7 @@ class FlashcardTest {
 
     @BeforeEach
     void setUp() {
-        flashcard = new Flashcard("How do you insert COMMENTS in Java code?", "//", Flashcard.difficulty.EASY, "Java Basics");
+        flashcard = new Flashcard("How do you insert COMMENTS in Java code?", "//", Flashcard.Difficulty.EASY, "Java Basics");
     }
 
     @Test
@@ -30,7 +30,7 @@ class FlashcardTest {
     @DisplayName("Check that the ID getter works.")
     void testGetID() {
         UUID fakeUUID = UUID.randomUUID();
-        Flashcard fakeFlashcard = new FakeFlashcard(fakeUUID, "question", "answer", Flashcard.difficulty.EASY, "topic");
+        Flashcard fakeFlashcard = new FakeFlashcard(fakeUUID, "question", "answer", Flashcard.Difficulty.EASY, "topic");
 
         assertEquals(fakeUUID, fakeFlashcard.getID());
 
@@ -52,7 +52,7 @@ class FlashcardTest {
     @Test
     @DisplayName("Check that the Difficulty getter works.")
     void getDifficulty() {
-        assertEquals(Flashcard.difficulty.EASY, flashcard.getDifficulty());
+        assertEquals(Flashcard.Difficulty.EASY, flashcard.getDifficulty());
     }
 
     @Test
@@ -80,9 +80,9 @@ class FlashcardTest {
     @Test
     @DisplayName("Check that the Difficulty setter works.")
     void setDifficulty() {
-        flashcard.setDifficulty(Flashcard.difficulty.NORMAL);
+        flashcard.setDifficulty(Flashcard.Difficulty.NORMAL);
 
-        assertEquals(Flashcard.difficulty.NORMAL, flashcard.getDifficulty());
+        assertEquals(Flashcard.Difficulty.NORMAL, flashcard.getDifficulty());
     }
 
     @Test

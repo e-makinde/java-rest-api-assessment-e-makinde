@@ -24,6 +24,14 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {DifficultyNotAvailableException.class})
+    public ResponseEntity<Object> handleDifficultyNotAvailableException(DifficultyNotAvailableException e) {
+        // Create payload containing exception details
+        ApplicationException exception = new ApplicationException(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
+        //Return response entity
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value =  {MethodArgumentNotValidException.class})
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {

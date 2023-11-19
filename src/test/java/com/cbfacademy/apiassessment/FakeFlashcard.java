@@ -8,7 +8,7 @@ public class FakeFlashcard extends Flashcard {
 
     private final UUID fakeUUID;
 
-    public FakeFlashcard(UUID fakeUUID, String flashcardQuestion, String flashcardAnswer, difficulty flashcardDifficultyType, String flashcardTopic) {
+    public FakeFlashcard(UUID fakeUUID, String flashcardQuestion, String flashcardAnswer, Difficulty flashcardDifficultyType, String flashcardTopic) {
         super(flashcardQuestion, flashcardAnswer, flashcardDifficultyType, flashcardTopic);
         this.fakeUUID = fakeUUID;
     }

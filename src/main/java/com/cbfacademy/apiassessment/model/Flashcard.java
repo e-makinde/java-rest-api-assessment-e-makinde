@@ -20,19 +20,19 @@ public class Flashcard {
     @JsonProperty("answer") @NotBlank(message = "Answer cannot be blank")
     private String flashcardAnswer;
 
-    @JsonProperty("difficulty")
-    private difficulty flashcardDifficultyType;
+    @JsonProperty("difficulty") @NotNull
+    private Flashcard.Difficulty flashcardDifficultyType;
 
     @JsonProperty("topic") @NotBlank (message = "Topic cannot be blank")
     private String flashcardTopic;
 
 
-    public enum difficulty {
+    public enum Difficulty {
         EASY, NORMAL, HARD
     }
 
 
-    public Flashcard(String flashcardQuestion, String flashcardAnswer, difficulty flashcardDifficultyType, String flashcardTopic) {
+    public Flashcard(String flashcardQuestion, String flashcardAnswer, Difficulty flashcardDifficultyType, String flashcardTopic) {
         this.flashcardID = UUID.randomUUID();
         this.flashcardQuestion = flashcardQuestion;
         this.flashcardAnswer = flashcardAnswer;
@@ -53,7 +53,7 @@ public class Flashcard {
         return this.flashcardAnswer;
     }
 
-    public difficulty getDifficulty() {
+    public Difficulty getDifficulty() {
         return this.flashcardDifficultyType;
     }
 
@@ -70,7 +70,7 @@ public class Flashcard {
         this.flashcardAnswer = flashcardAnswer;
     }
     
-    public void setDifficulty(difficulty difficultyType) {
+    public void setDifficulty(Difficulty difficultyType) {
         this.flashcardDifficultyType = difficultyType;
     }    
 

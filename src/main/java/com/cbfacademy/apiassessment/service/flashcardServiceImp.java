@@ -2,6 +2,7 @@ package com.cbfacademy.apiassessment.service;
 
 
 import com.cbfacademy.apiassessment.algorithm.FlashcardLinearSearchAlgorithm;
+import com.cbfacademy.apiassessment.exception.DifficultyNotAvailableException;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class flashcardServiceImp implements flashcardService {
 
     @Autowired
     flashcardRepository flashcardRepository;
+    @Autowired
+    FlashcardLinearSearchAlgorithm flashcardLinearSearchAlgorithm;
 
 
     @Override
@@ -25,7 +28,7 @@ public class flashcardServiceImp implements flashcardService {
 
     public Flashcard getFlashcard(UUID id){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
-        return new FlashcardLinearSearchAlgorithm().linearSearch(flashcards, id);
+        return flashcardLinearSearchAlgorithm.linearSearch(flashcards, id);
     }
 
 
@@ -36,6 +39,27 @@ public class flashcardServiceImp implements flashcardService {
 
     public String getAnswer(UUID id) {
         return getFlashcard(id).getFlashcardAnswer();
+    }
+
+    public ArrayList<Flashcard> getFlashcardsByTopic(String topic) {
+        ArrayList<Flashcard> flashcards = getAllFlashcards();
+        return flashcardLinearSearchAlgorithm.linearSearch(flashcards, topic);
+    }
+
+    public ArrayList<Flashcard> getFlashcardsByDifficulty(String difficulty) {
+        ArrayList<Flashcard> flashcards = getAllFlashcards();
+
+        Flashcard.Difficulty flashcardEnum;
+
+        if (difficulty.equalsIgnoreCase("easy")) {
+            flashcardEnum = Flashcard.Difficulty.EASY;
+        } else if (difficulty.equalsIgnoreCase("normal")) {
+            flashcardEnum = Flashcard.Difficulty.NORMAL;
+        } else if (difficulty.equalsIgnoreCase("hard")) {
+            flashcardEnum = Flashcard.Difficulty.HARD;
+        } else throw new DifficultyNotAvailableException("Wrong argument input.");
+
+        return flashcardLinearSearchAlgorithm.linearSearch(flashcards, flashcardEnum);
     }
 
 
@@ -58,7 +82,7 @@ public class flashcardServiceImp implements flashcardService {
     @Override
     public void updateFlashcard(Flashcard clientUpdatedFlashcard){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
-        Flashcard foundFlashcard = new FlashcardLinearSearchAlgorithm().linearSearch(flashcards,clientUpdatedFlashcard.getID());
+        Flashcard foundFlashcard = flashcardLinearSearchAlgorithm.linearSearch(flashcards,clientUpdatedFlashcard.getID());
 
         foundFlashcard.setFlashcardQuestion(clientUpdatedFlashcard.getFlashcardQuestion());
         foundFlashcard.setFlashcardAnswer(clientUpdatedFlashcard.getFlashcardAnswer());
