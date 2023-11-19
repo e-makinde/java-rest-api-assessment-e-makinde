@@ -2,12 +2,10 @@ package com.cbfacademy.apiassessment.service;
 
 import com.cbfacademy.apiassessment.model.Flashcard;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-public interface flashcardService {
+public interface FlashcardService {
     default List<Flashcard> getAllFlashcards() { return null; }
 
     default Flashcard getFlashcard(UUID id) { return null; }

@@ -4,7 +4,7 @@ package com.cbfacademy.apiassessment.service;
 import com.cbfacademy.apiassessment.algorithm.FlashcardLinearSearchAlgorithm;
 import com.cbfacademy.apiassessment.exception.DifficultyNotAvailableException;
 import com.cbfacademy.apiassessment.model.Flashcard;
-import com.cbfacademy.apiassessment.repository.flashcardRepository;
+import com.cbfacademy.apiassessment.repository.FlashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
-public class flashcardServiceImp implements flashcardService {
+public class FlashcardServiceImp implements FlashcardService {
 
     @Autowired
-    flashcardRepository flashcardRepository;
+    FlashcardRepository flashcardRepository;
     @Autowired
     FlashcardLinearSearchAlgorithm flashcardLinearSearchAlgorithm;
 

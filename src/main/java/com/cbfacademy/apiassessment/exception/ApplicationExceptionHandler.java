@@ -2,6 +2,7 @@ package com.cbfacademy.apiassessment.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,6 +50,13 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         ApplicationException exception = new ApplicationException(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
+    public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        ApplicationException exception = new ApplicationException(e.getMessage() , HttpStatus.BAD_REQUEST, ZonedDateTime.now());
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 }
