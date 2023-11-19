@@ -20,7 +20,7 @@ public class FlashcardLinearSearchAlgorithm {
 
         if (!isFlashcardFound) throw new FlashcardNotFoundException("Flashcard not found with given ID.");
 
-        return foundFlashcard; // Flashcard with the specified ID not found
+        return foundFlashcard;
         }
 
 

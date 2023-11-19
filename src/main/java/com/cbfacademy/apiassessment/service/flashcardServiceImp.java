@@ -44,10 +44,7 @@ public class flashcardServiceImp implements flashcardService {
     @Override
     public void removeFlashcard(UUID id) {
         ArrayList<Flashcard> flashcards = getAllFlashcards();
-        // Find flashcard in list, using ID, and remove specified flashcard
         flashcards.removeIf(flashcard -> flashcard.getID().equals(id));
-
-        //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
 
     }
@@ -62,7 +59,7 @@ public class flashcardServiceImp implements flashcardService {
         foundFlashcard.setDifficulty(clientUpdatedFlashcard.getDifficulty());
         foundFlashcard.setFlashcardTopic(clientUpdatedFlashcard.getFlashcardTopic());
 
-        //Overwrite json with updated flashcard list
+
         flashcardRepository.writeJSONFile(flashcards);
     }
             
