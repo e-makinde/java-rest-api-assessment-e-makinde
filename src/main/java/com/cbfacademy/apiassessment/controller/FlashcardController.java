@@ -20,7 +20,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/flashcard")
-
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact (name = "Esther", email = "esthermakinde@hotmail.com"),
@@ -38,13 +37,15 @@ public class FlashcardController {
     @Autowired
     private flashcardServiceImp flashcardServiceImp;
 
+
+
     @Operation(
             description = "Reads the JSON file of flashcards into an array list of Flashcard objects. Retrieves the Flashcard array.",
             summary = "Gets all stored flashcards."
     )
 	@GetMapping("/all")
     public ResponseEntity<Object> getAllFlashcards() {
-        return ResponseHandler.responseBuilder("Here are all of the stored flashcards", HttpStatus.OK, flashcardServiceImp.getAllFlashcards());
+        return ResponseHandler.responseBuilder("Here are all of the stored flashcards.", HttpStatus.OK, flashcardServiceImp.getAllFlashcards());
     }
 
 
@@ -55,7 +56,7 @@ public class FlashcardController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<Object> getFlashcardByID(@PathVariable("id") UUID id) {
-        return ResponseHandler.responseBuilder("Here is the requested flashcard", HttpStatus.OK, flashcardServiceImp.getFlashcard(id));
+        return ResponseHandler.responseBuilder("Here is the requested flashcard with ID: " + id.toString(), HttpStatus.OK, flashcardServiceImp.getFlashcard(id));
     }
 
 
@@ -65,7 +66,7 @@ public class FlashcardController {
             summary = "Gets the Question of the flashcard with the specified ID."
     )
     @GetMapping("/question/{id}")
-    public ResponseEntity<Object> getQuestionByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested question", HttpStatus.OK, flashcardServiceImp.getQuestion(id));}
+    public ResponseEntity<Object> getQuestionByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested question with id: " + id.toString(), HttpStatus.OK, flashcardServiceImp.getQuestion(id));}
 
 
 
@@ -74,7 +75,7 @@ public class FlashcardController {
             summary = "Gets the Answer of the flashcard with the specified ID."
     )
     @GetMapping("/answer/{id}")
-    public ResponseEntity<Object> getAnswerByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested answer", HttpStatus.OK, flashcardServiceImp.getAnswer(id));}
+    public ResponseEntity<Object> getAnswerByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested answer with ID: " + id.toString(), HttpStatus.OK, flashcardServiceImp.getAnswer(id));}
 
 
 
@@ -92,7 +93,7 @@ public class FlashcardController {
                 sameDifficultyFlashcards.add(flashcard);
             }
         }
-        return ResponseHandler.responseBuilder("Here are flashcards with the same difficulty.", HttpStatus.OK, sameDifficultyFlashcards);
+        return ResponseHandler.responseBuilder("Here are flashcards with the same difficulty (%s).".formatted(difficulty) , HttpStatus.OK, sameDifficultyFlashcards);
     }
 
 
@@ -111,7 +112,7 @@ public class FlashcardController {
                 sameTopicFlashcards.add(flashcard);
             }
         }
-        return ResponseHandler.responseBuilder("Here are flashcards with the same topic.", HttpStatus.OK, sameTopicFlashcards);
+        return ResponseHandler.responseBuilder("Here are flashcards with the same topic (%s).".formatted(topic), HttpStatus.OK, sameTopicFlashcards);
     }
 
 
@@ -123,7 +124,7 @@ public class FlashcardController {
     @PostMapping(path="/new", produces="application/json")
     public String createFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.addFlashcard(flashcard);
-        return "Flashcard created successfully.";
+        return "Flashcard created successfully with ID: %s ".formatted(flashcard.getID());
     }
 
 
@@ -135,7 +136,7 @@ public class FlashcardController {
     @PutMapping(path = "/update", produces = "application/json")
     public String updateFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.updateFlashcard(flashcard);
-        return "Flashcard updated successfully";
+        return "Flashcard updated successfully with ID: %s ".formatted(flashcard.getID());
     }
 
 
@@ -147,7 +148,7 @@ public class FlashcardController {
     @DeleteMapping("/delete")
     public String deleteFlashcardByID(UUID id) {
         flashcardServiceImp.removeFlashcard(id);
-        return "Flashcard deleted successfully";
+        return "Flashcard (ID:%s) deleted successfully.".formatted(id);
     }
 
 }
