@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -7,6 +8,7 @@ import java.util.UUID;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class FlashcardController {
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
     public ResponseEntity<ArrayList<Flashcard>> getAllFlashcards() {
-        return ResponseEntity.ok(flashcardServiceImp.getAllFlashcards());
+            return ResponseEntity.ok(flashcardServiceImp.getAllFlashcards());
     }
 
     @GetMapping("/{id}")
@@ -81,7 +83,7 @@ public class FlashcardController {
 
 
     @DeleteMapping("/delete")
-    public void deleteFlashcardByID(UUID id) throws IOException {
+    public void deleteFlashcardByID(UUID id) {
         flashcardServiceImp.removeFlashcard(id);
     }
 
