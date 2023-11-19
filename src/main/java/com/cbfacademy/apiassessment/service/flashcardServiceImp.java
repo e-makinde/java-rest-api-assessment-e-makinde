@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment.service;
 
+import com.cbfacademy.apiassessment.exception.FlashcardNotFoundException;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import com.cbfacademy.apiassessment.repository.flashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,30 @@ public class flashcardServiceImp implements flashcardService {
     flashcardRepository flashcardRepository;
 
     @Override
-    public ArrayList<Flashcard> getAllFlashcards() {
+    public ArrayList<Flashcard> getAllFlashcards(){
         return flashcardRepository.readJSONFile();
+    }
+
+    public Flashcard getFlashcard(UUID id){
+        ArrayList<Flashcard> flashcards = getAllFlashcards();
+        Flashcard foundFlashcard = null;
+            for (Flashcard flashcard : flashcards) {
+                if (flashcard.getID().equals(id)) {
+                    foundFlashcard = flashcard;
+                    return  foundFlashcard;
+                } else {
+                    throw new FlashcardNotFoundException("Flashcard not found.");
+                }
+            }
+        return foundFlashcard;
+    }
+
+    public String getQuestion(UUID id) {
+        return getFlashcard(id).getFlashcardQuestion();
+    }
+
+    public String getAnswer(UUID id) {
+        return getFlashcard(id).getFlashcardAnswer();
     }
 
     @Override
@@ -34,21 +57,29 @@ public class flashcardServiceImp implements flashcardService {
 
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
+
     }
 
     @Override
-    public void updateFlashcard(Flashcard updatedFlashcard) {
+    public void updateFlashcard(Flashcard clientUpdatedFlashcard){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
+
+        boolean flashcardFound = false;
+
         // Find flashcards in list
         for (Flashcard flashcard:flashcards) {
             //Find flashcard obj and update as per the parameter stated
-            if (flashcard.getID().equals(updatedFlashcard.getID())) {
-                flashcard.setFlashcardQuestion(updatedFlashcard.getFlashcardQuestion());
-                flashcard.setFlashcardAnswer(updatedFlashcard.getFlashcardAnswer());
-                flashcard.setDifficulty(updatedFlashcard.getDifficulty());
-                flashcard.setFlashcardTopic(updatedFlashcard.getFlashcardTopic());
+            if (flashcard.getID().equals(clientUpdatedFlashcard.getID())) {
+                flashcard.setFlashcardQuestion(clientUpdatedFlashcard.getFlashcardQuestion());
+                flashcard.setFlashcardAnswer(clientUpdatedFlashcard.getFlashcardAnswer());
+                flashcard.setDifficulty(clientUpdatedFlashcard.getDifficulty());
+                flashcard.setFlashcardTopic(clientUpdatedFlashcard.getFlashcardTopic());
+                flashcardFound = true;
             }
         }
+
+        if (!flashcardFound) throw new FlashcardNotFoundException("Not matching flashcard with the id.");
+
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
     }

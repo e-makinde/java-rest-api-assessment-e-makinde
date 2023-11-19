@@ -1,12 +1,18 @@
 package com.cbfacademy.apiassessment.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/flashcard")
@@ -18,50 +24,26 @@ public class FlashcardController {
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public ArrayList<Flashcard> getAllFlashcards() {
-        return flashcardServiceImp.getAllFlashcards();
+    public ResponseEntity<ArrayList<Flashcard>> getAllFlashcards() {
+            return ResponseEntity.ok(flashcardServiceImp.getAllFlashcards());
     }
 
     @GetMapping("/{id}")
-    public Flashcard getFlashcardByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard;
-            }
-        }
-        return null;
+    public ResponseEntity<Flashcard> getFlashcardByID(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(flashcardServiceImp.getFlashcard(id));
     }
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
-    public String getQuestionByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard.getFlashcardQuestion();
-            }
-        }
-        return "No question found";
-    
-    }
+    public ResponseEntity<String> getQuestionByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getQuestion(id));}
 
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
-    public String getAnswerByID(@PathVariable("id") String id) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getID().toString().equals(id)) {
-                return flashcard.getFlashcardAnswer();
-            }
-        }
-        return "No Answer found";
-
-    }
+    public ResponseEntity<String> getAnswerByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getAnswer(id));}
 
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
-    public ArrayList<Flashcard> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
+    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
 
@@ -70,12 +52,12 @@ public class FlashcardController {
                 sameDifficultyFlashcards.add(flashcard);
             }
         }
-        return sameDifficultyFlashcards;
+        return ResponseEntity.ok(sameDifficultyFlashcards);
     }
 
     //Get all questions within a certain topic
     @GetMapping("/questions/topic/{topic}")
-    public ArrayList<Flashcard> getQuestionsByTopic(@PathVariable("topic") String topic) {
+    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByTopic(@PathVariable("topic") String topic) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
@@ -84,18 +66,18 @@ public class FlashcardController {
                 sameTopicFlashcards.add(flashcard);
             }
         }
-        return sameTopicFlashcards;
+        return ResponseEntity.ok(sameTopicFlashcards);
     }
 
 
     @PostMapping(path="/new", produces="application/json")
-    public void createFlashcard(@RequestBody Flashcard flashcard) {
+    public void createFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.addFlashcard(flashcard);
     }
 
 
     @PutMapping(path = "/update", produces = "application/json")
-    public void updateFlashcard(@RequestBody Flashcard flashcard) {
+    public void updateFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.updateFlashcard(flashcard);
     }
 
