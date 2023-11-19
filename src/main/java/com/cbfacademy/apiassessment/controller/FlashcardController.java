@@ -1,7 +1,5 @@
 package com.cbfacademy.apiassessment.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -88,7 +86,7 @@ public class FlashcardController {
     @DeleteMapping("/delete")
     public String deleteFlashcardByID(UUID id) {
         flashcardServiceImp.removeFlashcard(id);
-        return "Flashcard deleted succesfully";
+        return "Flashcard deleted successfully";
     }
 
 }
