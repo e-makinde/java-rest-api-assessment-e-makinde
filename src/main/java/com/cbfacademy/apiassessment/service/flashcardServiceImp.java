@@ -23,14 +23,17 @@ public class flashcardServiceImp implements flashcardService {
     public Flashcard getFlashcard(UUID id){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         Flashcard foundFlashcard = null;
+
+        boolean flashcardFound = false;
+
             for (Flashcard flashcard : flashcards) {
                 if (flashcard.getID().equals(id)) {
                     foundFlashcard = flashcard;
-                    return  foundFlashcard;
-                } else {
-                    throw new FlashcardNotFoundException("Flashcard not found.");
+                    flashcardFound = true;
                 }
             }
+
+        if (!flashcardFound) throw new FlashcardNotFoundException("Flashcard not found.");
         return foundFlashcard;
     }
 
