@@ -28,8 +28,7 @@ public class flashcardRepository {
         }
     }
 
-    public @NotNull
-    @Unmodifiable ArrayList<Flashcard> readJSONFile(){
+    public ArrayList<Flashcard> readJSONFile(){
         ArrayList<Flashcard> flashcards = new ArrayList<>();
         Gson gson = new GsonBuilder().create();
 

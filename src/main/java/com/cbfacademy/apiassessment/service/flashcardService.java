@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.UUID;
 
 public interface flashcardService {
-    default List<Flashcard> getAllFlashcards() {
-        return null;
-    }
+    default List<Flashcard> getAllFlashcards() { return null; }
 
-    default void addFlashcard(Flashcard flashcard) throws FileNotFoundException{}
+    default Flashcard getFlashcard(UUID id) { return null; }
 
-    default void removeFlashcard(UUID id) throws FileNotFoundException {}
+    default void addFlashcard(Flashcard flashcard) {}
 
-    default void updateFlashcard(Flashcard updatedFlashcard)throws FileNotFoundException{}
+    default void removeFlashcard(UUID id) {}
+
+    default void updateFlashcard(Flashcard updatedFlashcard) {}
 
 }

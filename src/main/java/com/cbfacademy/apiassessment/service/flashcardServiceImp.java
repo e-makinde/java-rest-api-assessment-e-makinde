@@ -16,23 +16,28 @@ public class flashcardServiceImp implements flashcardService {
     @Autowired
     flashcardRepository flashcardRepository;
 
+
     @Override
     public ArrayList<Flashcard> getAllFlashcards(){
         return flashcardRepository.readJSONFile();
     }
+
 
     public Flashcard getFlashcard(UUID id){
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         return new FlashcardLinearSearchAlgorithm().linearSearch(flashcards, id);
     }
 
+
     public String getQuestion(UUID id) {
         return getFlashcard(id).getFlashcardQuestion();
     }
 
+
     public String getAnswer(UUID id) {
         return getFlashcard(id).getFlashcardAnswer();
     }
+
 
     @Override
     public void addFlashcard(Flashcard flashcard) {
@@ -41,13 +46,14 @@ public class flashcardServiceImp implements flashcardService {
         flashcardRepository.writeJSONFile(flashcards);
     }
 
+
     @Override
     public void removeFlashcard(UUID id) {
         ArrayList<Flashcard> flashcards = getAllFlashcards();
         flashcards.removeIf(flashcard -> flashcard.getID().equals(id));
         flashcardRepository.writeJSONFile(flashcards);
-
     }
+
 
     @Override
     public void updateFlashcard(Flashcard clientUpdatedFlashcard){
@@ -58,7 +64,6 @@ public class flashcardServiceImp implements flashcardService {
         foundFlashcard.setFlashcardAnswer(clientUpdatedFlashcard.getFlashcardAnswer());
         foundFlashcard.setDifficulty(clientUpdatedFlashcard.getDifficulty());
         foundFlashcard.setFlashcardTopic(clientUpdatedFlashcard.getFlashcardTopic());
-
 
         flashcardRepository.writeJSONFile(flashcards);
     }
