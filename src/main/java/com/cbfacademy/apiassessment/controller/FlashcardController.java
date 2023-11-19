@@ -1,6 +1,5 @@
 package com.cbfacademy.apiassessment.controller;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import com.cbfacademy.apiassessment.response.ResponseHandler;
@@ -83,17 +82,9 @@ public class FlashcardController {
             description = "Reads the JSON file of flashcards into an array list of Flashcard objects. Uses a linear sort algorithm to find the Flashcard objects with the given difficulty. Each Flashcard with the given difficulty is appended to a new array list. API returns this list.",
             summary = "Gets all Flashcards with the specified difficulty in URI."
     )
-    @GetMapping("/questions/difficulty/{difficulty}")
-    public ResponseEntity<Object> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        ArrayList<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
-
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getDifficulty().toString().equals(difficulty)) {
-                sameDifficultyFlashcards.add(flashcard);
-            }
-        }
-        return ResponseHandler.responseBuilder("Here are flashcards with the same difficulty (%s).".formatted(difficulty) , HttpStatus.OK, sameDifficultyFlashcards);
+    @GetMapping("/difficulty/{difficulty}")
+    public ResponseEntity<Object> getFlashcardsByDifficulty(@PathVariable("difficulty") String difficulty) {
+        return ResponseHandler.responseBuilder("Here are the flashcards with the provided difficulty (%s).".formatted(difficulty), HttpStatus.OK, flashcardServiceImp.getFlashcardsByDifficulty(difficulty));
     }
 
 
@@ -102,18 +93,10 @@ public class FlashcardController {
             description = "Reads the JSON file of flashcards into an array list of Flashcard objects. Uses a linear sort algorithm to find the Flashcard objects with the given topic. Each Flashcard with the given topic is appended to a new array list. API returns this list.",
             summary = "Gets all Flashcards with the specified topic in URI."
     )
-    @GetMapping("/questions/topic/{topic}")
-    public ResponseEntity<Object> getQuestionsByTopic(@PathVariable("topic") String topic) {
-        ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
-        ArrayList<Flashcard> sameTopicFlashcards = new ArrayList<>();
-
-        for (Flashcard flashcard:flashcards) {
-            if (flashcard.getFlashcardTopic().equals(topic)) {
-                sameTopicFlashcards.add(flashcard);
-            }
-        }
-        return ResponseHandler.responseBuilder("Here are flashcards with the same topic (%s).".formatted(topic), HttpStatus.OK, sameTopicFlashcards);
-    }
+    @GetMapping("/topic/{topic}")
+    public ResponseEntity<Object> getFlashcardsByTopic(@PathVariable("topic") String topic) {
+        return ResponseHandler.responseBuilder("Here are the flashcards with the provided topic (%s).".formatted(topic), HttpStatus.OK, flashcardServiceImp.getFlashcardsByTopic(topic));
+     }
 
 
 
@@ -145,8 +128,8 @@ public class FlashcardController {
             description = "Reads the JSON file of stored flashcards into an array list of Flashcard objects. Iterates through this list to find a Flashcard object with the same ID as provided. Removes this flashcard from the array list and then overwrites JSON file with the updated array list.",
             summary = "Deletes a stored flashcard"
     )
-    @DeleteMapping("/delete")
-    public String deleteFlashcardByID(UUID id) {
+    @DeleteMapping("/delete/{id}")
+    public String deleteFlashcardByID(@PathVariable("id") UUID id) {
         flashcardServiceImp.removeFlashcard(id);
         return "Flashcard (ID:%s) deleted successfully.".formatted(id);
     }
