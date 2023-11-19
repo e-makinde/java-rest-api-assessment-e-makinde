@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.cbfacademy.apiassessment.response.ResponseHandler;
 import com.cbfacademy.apiassessment.service.flashcardServiceImp;
 import com.cbfacademy.apiassessment.model.Flashcard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +25,26 @@ public class FlashcardController {
 
     //Return all questions and answers that have been saved
 	@GetMapping("/all")
-    public ResponseEntity<ArrayList<Flashcard>> getAllFlashcards() {
-            return ResponseEntity.ok(flashcardServiceImp.getAllFlashcards());
+    public ResponseEntity<Object> getAllFlashcards() {
+        return ResponseHandler.responseBuilder("Here are all of the stored flashcards", HttpStatus.OK, flashcardServiceImp.getAllFlashcards());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Flashcard> getFlashcardByID(@PathVariable("id") UUID id) {
-        return ResponseEntity.ok(flashcardServiceImp.getFlashcard(id));
+    public ResponseEntity<Object> getFlashcardByID(@PathVariable("id") UUID id) {
+        return ResponseHandler.responseBuilder("Here is the requested flashcard", HttpStatus.OK, flashcardServiceImp.getFlashcard(id));
     }
 
     //Return an individual question using the ID
     @GetMapping("/question/{id}")
-    public ResponseEntity<String> getQuestionByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getQuestion(id));}
+    public ResponseEntity<Object> getQuestionByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested question", HttpStatus.OK, flashcardServiceImp.getQuestion(id));}
 
     //Return an individual answer using the ID
     @GetMapping("/answer/{id}")
-    public ResponseEntity<String> getAnswerByID(@PathVariable("id") UUID id) { return ResponseEntity.ok(flashcardServiceImp.getAnswer(id));}
+    public ResponseEntity<Object> getAnswerByID(@PathVariable("id") UUID id) { return ResponseHandler.responseBuilder("Here is the requested answer", HttpStatus.OK, flashcardServiceImp.getAnswer(id));}
 
     //Get all questions with a certain difficulty
     @GetMapping("/questions/difficulty/{difficulty}")
-    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
+    public ResponseEntity<Object> getQuestionsByDifficulty(@PathVariable("difficulty") String difficulty) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameDifficultyFlashcards = new ArrayList<>();
 
@@ -52,12 +53,12 @@ public class FlashcardController {
                 sameDifficultyFlashcards.add(flashcard);
             }
         }
-        return ResponseEntity.ok(sameDifficultyFlashcards);
+        return ResponseHandler.responseBuilder("Here are flashcards with the same difficulty.", HttpStatus.OK, sameDifficultyFlashcards);
     }
 
     //Get all questions within a certain topic
     @GetMapping("/questions/topic/{topic}")
-    public ResponseEntity<ArrayList<Flashcard>> getQuestionsByTopic(@PathVariable("topic") String topic) {
+    public ResponseEntity<Object> getQuestionsByTopic(@PathVariable("topic") String topic) {
         ArrayList<Flashcard> flashcards = flashcardServiceImp.getAllFlashcards();
         ArrayList<Flashcard> sameTopicFlashcards = new ArrayList<>();
 
@@ -66,25 +67,28 @@ public class FlashcardController {
                 sameTopicFlashcards.add(flashcard);
             }
         }
-        return ResponseEntity.ok(sameTopicFlashcards);
+        return ResponseHandler.responseBuilder("Here are flashcards with the same topic.", HttpStatus.OK, sameTopicFlashcards);
     }
 
 
     @PostMapping(path="/new", produces="application/json")
-    public void createFlashcard(@Valid @RequestBody Flashcard flashcard) {
+    public String createFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.addFlashcard(flashcard);
+        return "Flashcard created successfully.";
     }
 
 
     @PutMapping(path = "/update", produces = "application/json")
-    public void updateFlashcard(@Valid @RequestBody Flashcard flashcard) {
+    public String updateFlashcard(@Valid @RequestBody Flashcard flashcard) {
         flashcardServiceImp.updateFlashcard(flashcard);
+        return "Flashcard updated successfully";
     }
 
 
     @DeleteMapping("/delete")
-    public void deleteFlashcardByID(UUID id) {
+    public String deleteFlashcardByID(UUID id) {
         flashcardServiceImp.removeFlashcard(id);
+        return "Flashcard deleted succesfully";
     }
 
 }

@@ -1,8 +1,8 @@
 [
   {
     "flashcardID": "408a75c6-2381-4594-a99e-92022e274ce0",
-    "flashcardQuestion": "What does JSON stand for?",
-    "flashcardAnswer": "JavaScriptObjectNotation",
+    "flashcardQuestion": "What does dhskssdfffddjk stand for?",
+    "flashcardAnswer": "HyperTExtMarkupLanguage",
     "flashcardDifficultyType": "EASY",
     "flashcardTopic": "definitions"
   },
@@ -21,20 +21,10 @@
     "flashcardTopic": "definitions"
   },
   {
-    "flashcardID": "a1a0d82b-8618-49e4-974a-d919f827a807",
+    "flashcardID": "a313447a-68f6-434e-8911-7bb52ecef3cd",
     "flashcardQuestion": "What does HTML stand for?",
     "flashcardAnswer": "HyperTExtMarkupLanguage",
-    "flashcardTopic": "definitions"
-  },
-  {
-    "flashcardID": "8c4f4608-5261-45fa-b571-876739e7d483",
-    "flashcardQuestion": "What does HTML stand for?",
-    "flashcardAnswer": "HyperTExtMarkupLanguage",
-    "flashcardTopic": "definitions"
-  },
-  {
-    "flashcardID": "92776a7c-3cab-4df4-9204-7b2fa7122221",
-    "flashcardQuestion": "What does HTML stand for?",
+    "flashcardDifficultyType": "EASY",
     "flashcardTopic": "definitions"
   }
 ]

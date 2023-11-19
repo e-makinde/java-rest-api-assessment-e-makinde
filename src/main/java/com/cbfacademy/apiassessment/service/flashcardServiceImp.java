@@ -78,7 +78,7 @@ public class flashcardServiceImp implements flashcardService {
             }
         }
 
-        if (!flashcardFound) throw new FlashcardNotFoundException("Not matching flashcard with the id.");
+        if (!flashcardFound) throw new FlashcardNotFoundException("No matching flashcard with the provided ID.");
 
         //Overwrite json with updated flashcard list
         flashcardRepository.writeJSONFile(flashcards);
