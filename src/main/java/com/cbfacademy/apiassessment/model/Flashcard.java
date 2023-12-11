@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.hibernate.validator.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
 
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @JsonPropertyOrder({ "id", "question", "answer", "difficulty", "topic" })
@@ -26,6 +27,9 @@ public class Flashcard {
     @JsonProperty("topic") @NotBlank (message = "Topic cannot be blank")
     private String flashcardTopic;
 
+    private Boolean latestUserResponse; // Map to store user responses (userId, isCorrect)
+
+
 
     public enum Difficulty {
         EASY, NORMAL, HARD
@@ -38,6 +42,8 @@ public class Flashcard {
         this.flashcardAnswer = flashcardAnswer;
         this.flashcardDifficultyType = flashcardDifficultyType;
         this.flashcardTopic = flashcardTopic;
+        this.latestUserResponse = null;
+
     }
 
     //GETTERS
@@ -61,6 +67,10 @@ public class Flashcard {
         return this.flashcardTopic;
     }
 
+    public Boolean getLatestUserResponse() {
+        return this.latestUserResponse;
+    }
+
     //SETTERS
     public void setFlashcardQuestion(String flashcardQuestion) {
         this.flashcardQuestion = flashcardQuestion;
@@ -76,6 +86,10 @@ public class Flashcard {
 
     public void setFlashcardTopic(String flashcardTopic) {
         this.flashcardTopic = flashcardTopic;
+    }
+
+    public void setLatestUserResponse(Boolean latestUserResponse) {
+        this.latestUserResponse = latestUserResponse;
     }
 
 }
